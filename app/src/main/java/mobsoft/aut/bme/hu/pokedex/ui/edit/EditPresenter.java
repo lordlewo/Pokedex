@@ -10,6 +10,10 @@ public class EditPresenter extends Presenter<EditScreen>{
     }
 
     public static EditPresenter getInstance(){
+        if (_instance == null){
+            _instance = new EditPresenter();
+        }
+
         return _instance;
     }
 

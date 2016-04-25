@@ -10,6 +10,10 @@ public class MainListPresenter extends Presenter<MainListScreen>{
     }
 
     public static MainListPresenter getInstance(){
+        if (_instance == null) {
+            _instance = new MainListPresenter();
+        }
+
         return _instance;
     }
 

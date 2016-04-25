@@ -10,6 +10,10 @@ public class AboutPresenter extends Presenter<AboutScreen> {
     }
 
     public static AboutPresenter getInstance(){
+        if (_instance == null){
+            _instance = new AboutPresenter();
+        }
+
         return _instance;
     }
 

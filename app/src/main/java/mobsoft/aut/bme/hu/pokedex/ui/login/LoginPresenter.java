@@ -10,6 +10,10 @@ public class LoginPresenter extends Presenter<LoginScreen>{
     }
 
     public static LoginPresenter getInstance(){
+        if (_instance == null){
+            _instance = new LoginPresenter();
+        }
+
         return _instance;
     }
 
