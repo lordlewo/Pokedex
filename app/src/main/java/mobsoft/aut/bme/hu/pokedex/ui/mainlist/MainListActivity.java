@@ -36,7 +36,7 @@ public class MainListActivity extends AppCompatActivity implements MainListScree
         li_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainListPresenter.getInstance().callLoremIpsumService();
+                MainListPresenter.getInstance().getLoremIpsum();
                 Toast.makeText(getApplicationContext(), _li, Toast.LENGTH_LONG).show();
             }
         });

@@ -1,5 +1,6 @@
 package mobsoft.aut.bme.hu.pokedex.ui.mainlist;
 
+import mobsoft.aut.bme.hu.pokedex.interactor.repository.RepositoryInteractor;
 import mobsoft.aut.bme.hu.pokedex.ui.Presenter;
 
 public class MainListPresenter extends Presenter<MainListScreen>{
@@ -28,8 +29,11 @@ public class MainListPresenter extends Presenter<MainListScreen>{
     }
 
 
-    public void callLoremIpsumService(){
-        screen.setLoremIpsum("Lorem Ipsum ...");
+    public void getLoremIpsum(){
+
+        String li = RepositoryInteractor.getInstance().getLoremIpsum();
+
+        screen.setLoremIpsum(li);
     }
 
 }
