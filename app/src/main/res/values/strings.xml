@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Pokedex</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_main_list">MainListActivity</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="title_activity_edit">EditActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
 </resources>
