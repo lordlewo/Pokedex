@@ -1,4 +1,4 @@
-package mobsoft.aut.bme.hu.pokedex;
+package mobsoft.aut.bme.hu.pokedex.ui.about;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,7 +7,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class AboutActivity extends AppCompatActivity {
+import mobsoft.aut.bme.hu.pokedex.R;
+
+public class AboutActivity extends AppCompatActivity implements AboutScreen{
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        AboutPresenter.getInstance().attachScreen(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AboutPresenter.getInstance().detachScreen();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

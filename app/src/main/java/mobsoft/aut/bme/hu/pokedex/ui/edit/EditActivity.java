@@ -1,4 +1,4 @@
-package mobsoft.aut.bme.hu.pokedex;
+package mobsoft.aut.bme.hu.pokedex.ui.edit;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,12 +7,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class DetailsActivity extends AppCompatActivity {
+import mobsoft.aut.bme.hu.pokedex.R;
+
+public class EditActivity extends AppCompatActivity implements EditScreen{
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EditPresenter.getInstance().attachScreen(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EditPresenter.getInstance().detachScreen();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
+        setContentView(R.layout.activity_edit);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

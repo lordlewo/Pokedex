@@ -1,4 +1,4 @@
-package mobsoft.aut.bme.hu.pokedex;
+package mobsoft.aut.bme.hu.pokedex.ui.login;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,12 +7,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class MainListActivity extends AppCompatActivity {
+import mobsoft.aut.bme.hu.pokedex.R;
+
+public class LoginActivity extends AppCompatActivity implements LoginScreen{
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LoginPresenter.getInstance().attachScreen(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LoginPresenter.getInstance().detachScreen();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_list);
+        setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
