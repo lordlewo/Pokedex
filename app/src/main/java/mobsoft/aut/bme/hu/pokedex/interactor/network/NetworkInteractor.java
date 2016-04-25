@@ -1,16 +1,15 @@
 package mobsoft.aut.bme.hu.pokedex.interactor.network;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import mobsoft.aut.bme.hu.pokedex.PokedexApplication;
+
+@Singleton
 public class NetworkInteractor {
 
-    private static NetworkInteractor _instance = null;
-
-    private NetworkInteractor(){}
-
-    public static NetworkInteractor getInstance(){
-        if (_instance == null){
-            _instance = new NetworkInteractor();
-        }
-
-        return _instance;
+    @Inject
+    public NetworkInteractor(){
+        PokedexApplication.injector.inject(this);
     }
 }

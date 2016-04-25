@@ -7,20 +7,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import javax.inject.Inject;
+
+import mobsoft.aut.bme.hu.pokedex.PokedexApplication;
 import mobsoft.aut.bme.hu.pokedex.R;
 
 public class AboutActivity extends AppCompatActivity implements AboutScreen{
 
+    @Inject
+    protected AboutPresenter aboutPresenter;
+
     @Override
     protected void onStart() {
         super.onStart();
-        AboutPresenter.getInstance().attachScreen(this);
+        aboutPresenter.attachScreen(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        AboutPresenter.getInstance().detachScreen();
+        PokedexApplication.injector.inject(this);
+        aboutPresenter.detachScreen();
     }
 
     @Override
@@ -29,15 +36,6 @@ public class AboutActivity extends AppCompatActivity implements AboutScreen{
         setContentView(R.layout.activity_about);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
 }

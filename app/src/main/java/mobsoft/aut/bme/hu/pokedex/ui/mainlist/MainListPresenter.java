@@ -1,26 +1,30 @@
 package mobsoft.aut.bme.hu.pokedex.ui.mainlist;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import mobsoft.aut.bme.hu.pokedex.PokedexApplication;
+import mobsoft.aut.bme.hu.pokedex.interactor.network.NetworkInteractor;
 import mobsoft.aut.bme.hu.pokedex.interactor.repository.RepositoryInteractor;
 import mobsoft.aut.bme.hu.pokedex.ui.Presenter;
 
+@Singleton
 public class MainListPresenter extends Presenter<MainListScreen>{
 
-    private static MainListPresenter _instance = null;
+    @Inject
+    protected NetworkInteractor networkInteractor;
 
-    private MainListPresenter(){
-    }
+    @Inject
+    protected RepositoryInteractor repositoryInteractor;
 
-    public static MainListPresenter getInstance(){
-        if (_instance == null) {
-            _instance = new MainListPresenter();
-        }
 
-        return _instance;
-    }
+    @Inject
+    public MainListPresenter(){}
 
     @Override
     public void attachScreen(MainListScreen screen) {
         super.attachScreen(screen);
+        PokedexApplication.injector.inject(this);
     }
 
     @Override
@@ -31,7 +35,7 @@ public class MainListPresenter extends Presenter<MainListScreen>{
 
     public void getLoremIpsum(){
 
-        String li = RepositoryInteractor.getInstance().getLoremIpsum();
+        String li = repositoryInteractor.getLoremIpsum();
 
         screen.setLoremIpsum(li);
     }

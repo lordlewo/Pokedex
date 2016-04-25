@@ -1,17 +1,16 @@
 package mobsoft.aut.bme.hu.pokedex.interactor.repository;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import mobsoft.aut.bme.hu.pokedex.PokedexApplication;
+
+@Singleton
 public class RepositoryInteractor {
 
-    private static RepositoryInteractor _instance = null;
-
-    private RepositoryInteractor(){}
-
-    public static RepositoryInteractor getInstance(){
-        if (_instance == null){
-            _instance = new RepositoryInteractor();
-        }
-
-        return _instance;
+    @Inject
+    public RepositoryInteractor(){
+        PokedexApplication.injector.inject(this);
     }
 
     public String getLoremIpsum(){

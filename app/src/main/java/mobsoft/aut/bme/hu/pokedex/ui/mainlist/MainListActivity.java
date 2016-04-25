@@ -9,20 +9,27 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import javax.inject.Inject;
+
+import mobsoft.aut.bme.hu.pokedex.PokedexApplication;
 import mobsoft.aut.bme.hu.pokedex.R;
 
 public class MainListActivity extends AppCompatActivity implements MainListScreen{
 
+    @Inject
+    protected MainListPresenter mainListPresenter;
+
     @Override
     protected void onStart() {
         super.onStart();
-        MainListPresenter.getInstance().attachScreen(this);
+        PokedexApplication.injector.inject(this);
+        mainListPresenter.attachScreen(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MainListPresenter.getInstance().detachScreen();
+        mainListPresenter.detachScreen();
     }
 
     @Override
@@ -36,18 +43,8 @@ public class MainListActivity extends AppCompatActivity implements MainListScree
         li_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainListPresenter.getInstance().getLoremIpsum();
+                mainListPresenter.getLoremIpsum();
                 Toast.makeText(getApplicationContext(), _li, Toast.LENGTH_LONG).show();
-            }
-        });
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
     }

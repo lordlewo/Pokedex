@@ -1,25 +1,30 @@
 package mobsoft.aut.bme.hu.pokedex.ui.about;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import mobsoft.aut.bme.hu.pokedex.PokedexApplication;
+import mobsoft.aut.bme.hu.pokedex.interactor.network.NetworkInteractor;
+import mobsoft.aut.bme.hu.pokedex.interactor.repository.RepositoryInteractor;
 import mobsoft.aut.bme.hu.pokedex.ui.Presenter;
 
+@Singleton
 public class AboutPresenter extends Presenter<AboutScreen> {
 
-    private static AboutPresenter _instance = null;
+    @Inject
+    protected NetworkInteractor networkInteractor;
 
-    private AboutPresenter(){
-    }
+    @Inject
+    protected RepositoryInteractor repositoryInteractor;
 
-    public static AboutPresenter getInstance(){
-        if (_instance == null){
-            _instance = new AboutPresenter();
-        }
 
-        return _instance;
-    }
+    @Inject
+    public AboutPresenter(){}
 
     @Override
     public void attachScreen(AboutScreen screen) {
         super.attachScreen(screen);
+        PokedexApplication.injector.inject(this);
     }
 
     @Override
