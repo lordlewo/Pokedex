@@ -1,5 +1,8 @@
 package mobsoft.aut.bme.hu.pokedex.model;
 
+import com.orm.dsl.Table;
+
+@Table
 public class Pokemon {
 
     private int _number;

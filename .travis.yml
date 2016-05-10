@@ -35,6 +35,7 @@ script: ./gradlew :app:build
 env:
   global:
     - MALLOC_ARENA_MAX=2
+    - ADB_INSTALL_TIMEOUT=10
 sudo: required
 
 before_script:
