@@ -1,0 +1,225 @@
+# this is an example of the Uber API
+# as a demonstration of an API spec in YAML
+swagger: '2.0'
+info:
+  title: Pokedex
+  description: Pokemon codex
+  version: "1.0.0"
+# the domain of the service
+host: api.pokedex.com
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /search:
+    get:
+      summary: Search pokemons
+      description: |
+        Returns the list of pokemons that has the query string in their name.
+      parameters:
+        - name: name
+          in: query
+          description: Part of the name of the pokemon
+          required: true
+          type: string
+          format: string
+      tags:
+        - Search
+        - Pokemons
+      responses:
+        200:
+          description: A list of the pokemons that has the query string in their name
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Pokemon'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /get:
+    get:
+      summary: List of user's pokemons
+      description: |
+        Returns the pokemons which were catched by the user.
+      parameters:
+        - name: userId
+          in: query
+          description: The user's unique identifier
+          required: true
+          type: string
+          format: string
+      tags:
+        - Pokemons
+        - Catches
+      responses:
+        200:
+          description: An array of pokemons which were catched by the user
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Pokemon'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /add:
+    put:
+      summary: Adds new pokemon
+      description: Adds a new pokemon to the list of catched pokemons for the user
+      parameters:
+        - name: userId
+          in: query
+          description: The user's unique identifier
+          required: true
+          type: string
+          format: string
+        - name: pokeId
+          in: query
+          description: The pokemon's unique identifier
+          required: true
+          type: string
+          format: string
+      tags:
+        - Pokemons
+        - Catches
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Empty'
+              
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /remove:
+    delete:
+      summary: Deletes a pokemon
+      description: Deletes a pokemon from the users list of catched pokemons
+      parameters:
+        - name: userId
+          in: query
+          description: The user's unique identifier
+          required: true
+          type: string
+          format: string
+        - name: pokeId
+          in: query
+          description: The pokemon's unique identifier
+          required: true
+          type: string
+          format: string
+      tags:
+        - Pokemons
+        - Catches
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Empty'
+              
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /getPokemon:
+    get:
+      summary: Detailed data on a pokemon
+      description: Returns the detailed description of the selected pokemon
+      parameters:
+        - name: pokeId
+          in: query
+          type: string
+          format: string
+          description: The pokemon's unique identifier
+      tags:
+        - Pokemons
+      responses:
+        200:
+          description: Detailed description of the pokemon
+          schema:
+            $ref: '#/definitions/Pokemon'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /login:
+    get:
+      summary: Login
+      description: Attempts to log in the user
+      parameters:
+        - name: userId
+          in: query
+          type: string
+          format: string
+          description: The user's id
+        - name: password
+          in: query
+          type: string
+          format: string
+          description: The user's password sent in a very safe plaintext way
+      tags:
+        - User
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Empty'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  Pokemon:
+    type: object
+    properties:
+      pokeId:
+        type: string
+        description: Unique id of the pokemon.
+      name:
+        type: string
+        description: Name of the pokemon.
+      type:
+        type: string
+        description: Type of the pokemon.
+      weight:
+        type: string
+        description: Weight of the pokemon.
+      height:
+        type: string
+        description: Height of the pokemon.
+      skill:
+        type: string
+        description: Skill of the pokemon.
+      health:
+        type: string
+        description: Healt of the pokemon.
+      attack:
+        type: string
+        description: Attack of the pokemon.
+      defense:
+        type: string
+        description: Defense of the pokemon.
+      speed:
+        type: string
+        description: Speed of the pokemon.
+      image:
+        type: string
+        description: URL of the cover image.
+  Empty:
+    type: object
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
