@@ -1,5 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
 
 android {
     compileSdkVersion 23
@@ -69,4 +83,20 @@ dependencies {
     compile "com.google.code.gson:gson:$gson_version"
     compile "io.swagger:swagger-annotations:$swagger_annotations_version"
     //compile "org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:$oltu_version"
+
+    testCompile('org.robolectric:shadows-support-v4:3.0-rc3') {
+        exclude group: 'commons-logging', module: 'commons-logging'
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+        transitive = true;
+    }
+
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.1') {
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
+    }
 }
+apply plugin: 'com.google.gms.google-services'
