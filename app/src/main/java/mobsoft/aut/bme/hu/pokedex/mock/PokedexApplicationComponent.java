@@ -1,4 +1,4 @@
-package mobsoft.aut.bme.hu.pokedex;
+package mobsoft.aut.bme.hu.pokedex.mock;
 
 import javax.inject.Singleton;
 
@@ -24,19 +24,19 @@ public interface PokedexApplicationComponent {
 
     // ui
 
-    void inject(MainListActivity mainListActivity);
+    //void inject(MainListActivity mainListActivity);
     void inject(MainListPresenter mainListPresenter);
 
-    void inject(LoginActivity loginActivity);
+    //void inject(LoginActivity loginActivity);
     void inject(LoginPresenter loginPresenter);
 
-    void inject(EditActivity editActivity);
+    //void inject(EditActivity editActivity);
     void inject(EditPresenter editPresenter);
 
-    void inject(DetailsActivity detailsActivity);
+    //void inject(DetailsActivity detailsActivity);
     void inject(DetailsPresenter detailsPresenter);
 
-    void inject(AboutActivity aboutActivity);
+    //void inject(AboutActivity aboutActivity);
     void inject(AboutPresenter aboutPresenter);
 
 

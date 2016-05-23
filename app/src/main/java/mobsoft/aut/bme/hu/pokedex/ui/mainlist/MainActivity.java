@@ -1,73 +1,53 @@
 package mobsoft.aut.bme.hu.pokedex.ui.mainlist;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import mobsoft.aut.bme.hu.pokedex.PokedexApplication;
-import mobsoft.aut.bme.hu.pokedex.R;
-import mobsoft.aut.bme.hu.pokedex.interactor.network.api.CatchesApi;
-import mobsoft.aut.bme.hu.pokedex.interactor.network.model.Pokemon;
-import mobsoft.aut.bme.hu.pokedex.mock.interactors.NetworkInteractor;
+import aut.bme.hu.mymovies.MyMoviesApplication;
+import aut.bme.hu.mymovies.R;
+import aut.bme.hu.mymovies.interactors.NetworkInteractor;
+import aut.bme.hu.mymovies.network.api.FavoritesApi;
+import aut.bme.hu.mymovies.network.api.SearchApi;
+import aut.bme.hu.mymovies.network.model.Movie;
+import aut.bme.hu.mymovies.presenters.MainPresenter;
+import aut.bme.hu.mymovies.screens.MainScreen;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainListActivity extends AppCompatActivity implements MainListScreen{
-
+public class MainActivity extends AppCompatActivity implements MainScreen {
     @Inject
-    protected MainListPresenter mainListPresenter;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        PokedexApplication.injector.inject(this);
-        mainListPresenter.attachScreen(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mainListPresenter.detachScreen();
-    }
-
-
-    /**************************************************************************/
-
-    private String _li;
-
-    public void setLoremIpsum(String li){
-        this._li = li;
-    }
-
-
+    protected MainPresenter mainPresenter;
     @Inject
     protected NetworkInteractor networkInteractor;
     @Inject
-    protected CatchesApi catchesApi;
+    protected FavoritesApi favoritesApi;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -84,7 +64,7 @@ public class MainListActivity extends AppCompatActivity implements MainListScree
      */
     private ViewPager mViewPager;
 
-    private static List<Pokemon> pokemons = new ArrayList<>();
+    private static List<Movie> favorites = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,15 +81,15 @@ public class MainListActivity extends AppCompatActivity implements MainListScree
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        PokedexApplication.injector.inject(this);
+        MyMoviesApplication.injector.inject(this);
 
-        Call<List<Pokemon>> c = catchesApi.getGet("mockUser");
+        Call<List<Movie>> c = favoritesApi.favoritesGetGet("mockUser");
 
-        c.enqueue(new Callback<List<Pokemon>>() {
+        c.enqueue(new Callback<List<Movie>>() {
             @Override
-            public void onResponse(Response<List<Pokemon>> response) {
+            public void onResponse(Response<List<Movie>> response) {
                 if (response.code() == 200) {
-                    pokemons = response.body();
+                    favorites = response.body();
                 }
             }
 
@@ -128,6 +108,18 @@ public class MainListActivity extends AppCompatActivity implements MainListScree
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mainPresenter.attachScreen(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mainPresenter.detachScreen();
     }
 
     @Override
@@ -210,8 +202,8 @@ public class MainListActivity extends AppCompatActivity implements MainListScree
             ListView listView = (ListView) rootView.findViewById(R.id.listView);
 
             List<String> values = new ArrayList<>();
-            for (Pokemon pokemon: pokemons) {
-                values.add(pokemon.getName());
+            for (Movie movie: favorites) {
+                values.add(movie.getTitle());
             }
 
             final List<String> list = values;
@@ -304,10 +296,9 @@ public class MainListActivity extends AppCompatActivity implements MainListScree
                 case 0:
                     return "Search";
                 case 1:
-                    return "Catches";
+                    return "Favorites";
             }
             return null;
         }
     }
-
 }
