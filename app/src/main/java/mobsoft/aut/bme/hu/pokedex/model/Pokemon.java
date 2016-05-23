@@ -1,9 +1,10 @@
 package mobsoft.aut.bme.hu.pokedex.model;
 
+import com.orm.SugarRecord;
 import com.orm.dsl.Table;
 
 @Table
-public class Pokemon {
+public class Pokemon extends SugarRecord{
 
     private int _number;
     private String _name;
